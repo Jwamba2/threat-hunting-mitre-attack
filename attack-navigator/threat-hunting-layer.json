@@ -1,0 +1,162 @@
+{
+  "name": "Threat Hunting Lab - Wamba José",
+  "versions": {
+    "attack": "16",
+    "navigator": "5.1.0",
+    "layer": "4.5"
+  },
+  "domain": "enterprise-attack",
+  "description": "Five MITRE ATT&CK techniques emulated with Atomic Red Team, hunted in Splunk (Sysmon + Windows Security + PowerShell logs), and detected with Sigma rules and scheduled Splunk alerts.",
+  "filters": {
+    "platforms": ["Windows"]
+  },
+  "sorting": 0,
+  "layout": {
+    "layout": "side",
+    "aggregateFunction": "average",
+    "showID": true,
+    "showName": true,
+    "showAggregateScores": false,
+    "countUnscored": false,
+    "expandedSubtechniques": "annotated"
+  },
+  "hideDisabled": false,
+  "techniques": [
+    {
+      "techniqueID": "T1087.001",
+      "tactic": "discovery",
+      "score": 100,
+      "color": "#31a354",
+      "comment": "Hunt 1 - Detected: 3+ discovery commands (net, whoami, cmdkey) in 5 min. Sigma + Splunk alert (Medium). Alert fired.",
+      "enabled": true,
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1087",
+      "tactic": "discovery",
+      "enabled": true,
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1136.001",
+      "tactic": "persistence",
+      "score": 100,
+      "color": "#31a354",
+      "comment": "Hunt 2 - Detected: net user /add (Sysmon 1) correlated with Security 4720/4732. Sigma + Splunk alert (High).",
+      "enabled": true,
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1136",
+      "tactic": "persistence",
+      "enabled": true,
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1547.001",
+      "tactic": "persistence",
+      "score": 100,
+      "color": "#31a354",
+      "comment": "Hunt 3 - Detected: reg.exe write to CurrentVersion\\Run (Sysmon 1 + 13). Sigma + Splunk alert (High).",
+      "enabled": true,
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1547",
+      "tactic": "persistence",
+      "enabled": true,
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1547.001",
+      "tactic": "privilege-escalation",
+      "score": 100,
+      "color": "#31a354",
+      "comment": "Hunt 3 - Same detection as Persistence.",
+      "enabled": true,
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1547",
+      "tactic": "privilege-escalation",
+      "enabled": true,
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1053.005",
+      "tactic": "persistence",
+      "score": 100,
+      "color": "#31a354",
+      "comment": "Hunt 4 - Detected: schtasks /create (Sysmon 1) correlated with Security 4698. Sigma + Splunk alert (High).",
+      "enabled": true,
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1053",
+      "tactic": "persistence",
+      "enabled": true,
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1053.005",
+      "tactic": "execution",
+      "score": 100,
+      "color": "#31a354",
+      "comment": "Hunt 4 - Same detection as Persistence.",
+      "enabled": true,
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1053",
+      "tactic": "execution",
+      "enabled": true,
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1053.005",
+      "tactic": "privilege-escalation",
+      "score": 100,
+      "color": "#31a354",
+      "comment": "Hunt 4 - Same detection as Persistence.",
+      "enabled": true,
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1053",
+      "tactic": "privilege-escalation",
+      "enabled": true,
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1059.001",
+      "tactic": "execution",
+      "score": 100,
+      "color": "#31a354",
+      "comment": "Hunt 5 - Detected: powershell.exe -EncodedCommand (Sysmon 1), decoded via Script Block Logging 4104. Sigma + Splunk alert (High).",
+      "enabled": true,
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1059",
+      "tactic": "execution",
+      "enabled": true,
+      "showSubtechniques": true
+    }
+  ],
+  "gradient": {
+    "colors": ["#ffffff", "#31a354"],
+    "minValue": 0,
+    "maxValue": 100
+  },
+  "legendItems": [
+    { "label": "Detected in lab (Sigma + Splunk alert)", "color": "#31a354" }
+  ],
+  "metadata": [
+    { "name": "Author", "value": "Wamba José" },
+    { "name": "Tools", "value": "Splunk, Sysmon, Sigma, Atomic Red Team" }
+  ],
+  "showTacticRowBackground": true,
+  "tacticRowBackground": "#205b8f",
+  "selectTechniquesAcrossTactics": true,
+  "selectSubtechniquesWithParent": false
+}

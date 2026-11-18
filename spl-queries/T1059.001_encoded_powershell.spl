@@ -1,0 +1,11 @@
+| Hunt 5: T1059.001 - Encoded PowerShell
+| Author: Wamba José
+| Logic: powershell.exe started with -EncodedCommand (Sysmon EventCode 1)
+
+index=endpoint source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1
+Image="*\\powershell.exe" CommandLine="*-EncodedCommand*"
+| table _time host User CommandLine ParentImage
+
+| Decoded command (PowerShell Script Block Logging 4104):
+| index=endpoint source="*PowerShell/Operational*" EventCode=4104
+| | table _time host Message

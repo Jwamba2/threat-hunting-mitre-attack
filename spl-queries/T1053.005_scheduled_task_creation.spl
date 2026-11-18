@@ -1,0 +1,11 @@
+| Hunt 4: T1053.005 - Scheduled Task Created
+| Author: Wamba José
+| Logic: schtasks.exe /create (Sysmon EventCode 1)
+
+index=endpoint source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1
+Image="*\\schtasks.exe" CommandLine="*/create*"
+| table _time host User ParentImage CommandLine
+
+| Correlation (Windows Security 4698, requires auditpol "Other Object Access Events"):
+| index=endpoint source="*Security*" EventCode=4698
+| | table _time host Account_Name Task_Name

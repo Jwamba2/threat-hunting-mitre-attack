@@ -1,0 +1,27 @@
+title: Local Account Created via Net Command
+id: 3a8d5e21-7c4b-4f19-b2e6-9d0a1c7f5e84
+status: experimental
+description: Detects creation of a local user account using net.exe or net1.exe, a common persistence technique used to keep access to a machine.
+author: Wamba José
+date: 2026-11-17
+references:
+  - https://attack.mitre.org/techniques/T1136/001/
+tags:
+  - attack.persistence
+  - attack.t1136.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_img:
+    Image|endswith:
+      - '\net.exe'
+      - '\net1.exe'
+  selection_cli:
+    CommandLine|contains|all:
+      - ' user'
+      - '/add'
+  condition: all of selection_*
+falsepositives:
+  - Legitimate account creation by administrators
+level: medium

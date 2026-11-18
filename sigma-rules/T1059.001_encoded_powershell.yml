@@ -1,0 +1,28 @@
+title: Encoded PowerShell Command Execution
+id: 7b3f1e92-4c6d-4a8b-9e15-2f0d8c6a3b71
+status: experimental
+description: Detects PowerShell started with an encoded (Base64) command, a technique attackers use to hide what their script does from analysts and security tools.
+author: Wamba José
+date: 2026-11-18
+references:
+  - https://attack.mitre.org/techniques/T1059/001/
+tags:
+  - attack.execution
+  - attack.t1059.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_img:
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+  selection_cli:
+    CommandLine|contains:
+      - ' -EncodedCommand '
+      - ' -enc '
+      - ' -ec '
+  condition: all of selection_*
+falsepositives:
+  - Some management and deployment tools use encoded commands
+level: high

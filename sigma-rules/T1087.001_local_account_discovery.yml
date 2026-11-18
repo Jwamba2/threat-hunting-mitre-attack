@@ -1,0 +1,27 @@
+title: Local Account Discovery via Net Commands
+id: 6f1c2a9e-3b7d-4e8a-9c51-2d4f8b7e1a03
+status: experimental
+description: Detects enumeration of local accounts and groups using net.exe/net1.exe, commonly used by attackers after initial access.
+author: Wamba José
+date: 2026-11-16
+references:
+  - https://attack.mitre.org/techniques/T1087/001/
+tags:
+  - attack.discovery
+  - attack.t1087.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_img:
+    Image|endswith:
+      - '\net.exe'
+      - '\net1.exe'
+  selection_cli:
+    CommandLine|contains:
+      - ' user'
+      - ' localgroup'
+  condition: all of selection_*
+falsepositives:
+  - Administrators or IT scripts managing local accounts
+level: low

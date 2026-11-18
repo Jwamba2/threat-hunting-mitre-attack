@@ -1,0 +1,23 @@
+title: Scheduled Task Created via Schtasks
+id: 5e2b8c47-1d9a-4f3e-b7c2-8a6d0f4e1b93
+status: experimental
+description: Detects creation of a scheduled task with schtasks.exe, a technique attackers use to run their program at a set time or at every startup.
+author: Wamba José
+date: 2026-11-17
+references:
+  - https://attack.mitre.org/techniques/T1053/005/
+tags:
+  - attack.persistence
+  - attack.execution
+  - attack.t1053.005
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: '\schtasks.exe'
+    CommandLine|contains: '/create'
+  condition: selection
+falsepositives:
+  - Software installers and administrators creating legitimate tasks
+level: medium

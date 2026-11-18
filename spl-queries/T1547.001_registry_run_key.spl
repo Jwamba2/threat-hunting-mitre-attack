@@ -1,0 +1,8 @@
+| Hunt 3: T1547.001 - Registry Run Key Persistence
+| Author: Wamba José
+| Logic: new value written to CurrentVersion\Run (Sysmon EventCode 13)
+
+index=endpoint source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=13
+TargetObject="*\\CurrentVersion\\Run*"
+NOT Image="*\\SplunkUniversalForwarder\\*"
+| table _time host User Image TargetObject Details
